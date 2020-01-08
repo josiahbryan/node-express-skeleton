@@ -2,7 +2,7 @@ const host = process.env.DB_HOST || 'localhost';
 
 module.exports = {
   server: {
-    port: 9000
+    port: 9090
   },
   database: {
     url: `mongodb://${host}/node-express-skeleton-dev`,

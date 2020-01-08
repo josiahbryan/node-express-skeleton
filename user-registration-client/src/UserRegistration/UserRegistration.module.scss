@@ -1,0 +1,32 @@
+.root {
+	max-width: 400px;
+
+	h1 {
+		font-size: 2rem;
+		margin: 1rem 0 -.5rem;
+	}
+
+	.regCard {
+		padding: 1rem 2rem .5rem;
+
+		:global(.MuiCardContent-root),
+		.regForm {
+			display: flex;
+			flex-direction: column;
+		}
+
+		:global(.MuiTextField-root) {
+			margin-top: 1rem;
+		}
+
+		:global(.MuiButton-root) {
+			margin: 1.5rem 0 0;
+		}
+
+		.error {
+			color: red;
+			font-weight: bold;
+			margin: .5rem;
+		}
+	}
+}

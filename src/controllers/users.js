@@ -23,10 +23,50 @@ exports.read = function(req, res) {
 };
 
 exports.create = function(req, res) {
-  const newUser = new User(req.body);
+  const { email, password } = req.body;
+
+  /* Can test this route via curl:
+
+    curl -X POST -H "Content-Type: application/json" -d '{"email":"test@example.com","password":"example"}' "http://localhost:9090/users/"; echo
+
+  */
+
+  // Specs require valid email less than 31 characters long
+  if(!email ||
+      email.length > 30 ||
+     // Borrowed from https://www.regextester.com/19
+     !email.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/)) {
+    return response.sendBadRequest(res, "Invalid email address");
+  }
+
+  // Specs require password to be between 6 and 30 characters
+  if(!password ||
+      password.length < 6 ||
+      password.length > 30) {
+      return response.sendBadRequest(res, "Invalid password, must be between 6 and 30 characters");
+  }
+
+  const validatedData = {
+    // ID is automatically assigned by MongoDB
+    // See FIXME in user model re: specs
+    role: "user",
+    email,
+    password
+  };
+
+  const newUser = new User(validatedData);
   newUser.role = 'user';
-  newUser.save(function(err, user) {
-    if (err) return response.sendBadRequest(res, err);
+  newUser.save(async function(err, user) {
+    if (err) {
+      return response.sendBadRequest(res, err);
+    }
+    
+    // FIXME in the future, handle processes not succeeding
+    await Promise.all([
+      user.sendGreeting(),
+      user.sendGiftCard()
+    ]);
+
     response.sendCreated(res, user);
   });
 };

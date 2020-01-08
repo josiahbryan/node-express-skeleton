@@ -1,3 +1,23 @@
+# Homework
+
+This was cloned from the skeleton provided and the react client was added with CRA.
+
+To run:
+
+* Clone
+* `npm install` in both the root and the `user-registration-client` folder
+* `npm start` in the root
+* `cd user-registration-client && npm start` in another terminal
+
+At that point, you should see the registration UI and it should work as defined in the provided spec.
+
+See the console output of the first terminal (the one running the server) for the gift card and welcome emails printed to console as per the spec.
+
+Cheers!
+-Josiah
+
+The rest of this README is from the original repo.
+
 # Node + Express REST API skeleton
 This project is a skeleton for Node + Express REST API. It can be used as a starting point for Node REST API or just as an example how to use Express framework.
 
